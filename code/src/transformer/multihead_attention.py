@@ -9,18 +9,22 @@ class MultiHeadAttention(nn.Module):
         self.n_heads = n_heads
         self.d_model = d_model
         self.attention_mechanism = SelfAttention(masked=masked)
-        self.w_q = nn.Linear(self.d_model, self.d_model)
-        self.w_k = nn.Linear(self.d_model, self.d_model)
-        self.w_v = nn.Linear(self.d_model, self.d_model)
+        self.w_q = []
+        self.w_k = []
+        self.w_v = []
+        for i in range(self.n_heads):
+            self.w_q.append(nn.Linear(self.d_model, self.d_model))
+            self.w_k.append(nn.Linear(self.d_model, self.d_model))
+            self.w_v.append(nn.Linear(self.d_model, self.d_model))
         self.w_o = nn.Linear(self.d_model * self.n_heads, self.d_model)
 
     def forward(self, q: torch.tensor, k: torch.tensor, v: torch.tensor) -> torch.tensor:
         assert (q.size(2) == self.d_model), f"Error: the embedding space is not {self.d_model}-dim"
         concatenated_attentions = torch.empty(0)
         for i in range(self.n_heads):
-            proj_q = self.w_q(q)
-            proj_k = self.w_k(k)
-            proj_v = self.w_v(v)
+            proj_q = self.w_q[i](q)
+            proj_k = self.w_k[i](k)
+            proj_v = self.w_v[i](v)
             attention = self.attention_mechanism(proj_q, proj_k, proj_v)
             concatenated_attentions = torch.cat([concatenated_attentions, attention], dim=-1)
         return self.w_o(concatenated_attentions)
