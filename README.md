@@ -12,5 +12,5 @@ It contains the ready-to-use codes in the `code` folder, but also a more visuall
   * [Positional Encoding](https://github.com/paulinamoskwa/from-scratch/blob/main/code/src/transformer/positional_encoding.py)
   * [Encoder](https://github.com/paulinamoskwa/from-scratch/blob/main/code/src/transformer/encoder.py)
   * [Decoder](https://github.com/paulinamoskwa/from-scratch/blob/main/code/src/transformer/decoder.py)
-  * Transformer
+  * [Transformer](https://github.com/paulinamoskwa/from-scratch/blob/main/code/src/transformer/transformer.py)
 
