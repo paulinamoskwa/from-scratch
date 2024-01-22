@@ -10,18 +10,18 @@ class DecoderLayer(nn.Module):
         self.d_model = d_model
 
         # Masked multi-head attention sub-layer
-        self.masked_multihead_attention = MultiHeadAttention(n_heads, d_model, masked=True)
-        self.norm1 = nn.LayerNorm(d_model)
+        self.masked_multihead_attention = MultiHeadAttention(self.n_heads, self.d_model, masked=True)
+        self.norm1 = nn.LayerNorm(self.d_model)
 
         # Multi-head attention sub-layer
-        self.multihead_attention = MultiHeadAttention(n_heads, d_model)
-        self.norm2 = nn.LayerNorm(d_model)
+        self.multihead_attention = MultiHeadAttention(self.n_heads, self.d_model)
+        self.norm2 = nn.LayerNorm(self.d_model)
 
         # Feed-forward sub-layer
-        self.feedforward_1 = nn.Linear(d_model, d_model)
+        self.feedforward_1 = nn.Linear(self.d_model, self.d_model)
         self.relu = nn.ReLU()
-        self.feedforward_2 = nn.Linear(d_model, d_model)
-        self.norm3 = nn.LayerNorm(d_model)
+        self.feedforward_2 = nn.Linear(self.d_model, self.d_model)
+        self.norm3 = nn.LayerNorm(self.d_model)
 
     def forward(self, x: torch.tensor, encoder_output: torch.tensor) -> torch.tensor:
         # Masked multi-head attention sub-layer
@@ -49,7 +49,7 @@ class Decoder(nn.Module):
         self.n_layers = n_layers
         self.n_heads = n_heads
         self.d_model = d_model
-        self.decoder_layer = DecoderLayer(n_heads, d_model)
+        self.decoder_layer = DecoderLayer(self.n_heads, self.d_model)
 
     def forward(self, x: torch.tensor, encoder_output: torch.tensor) -> torch.tensor:
         for i in range(self.n_layers):
