@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 from encoder import Encoder
 from decoder import Decoder
-from positional_encoding import  PositionalEncoding
+from positional_encoding import PositionalEncoding
 
 
 class Transformer(nn.Module):
